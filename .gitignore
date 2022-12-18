@@ -19,3 +19,7 @@ yarn-error.log
 public/css
 public/js
 public/mix-manifest.json
+resources/js/images
+resources/js/icons
+postcss.config.js
+tailwind.config.js
