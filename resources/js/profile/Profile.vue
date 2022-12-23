@@ -41,77 +41,41 @@
     <div class="pt-4"></div>
     <div class="border border-gray-400 w-95"></div>
     <div class="pt-3">
-      <div class="flex items-center justify-between">
-        <a href="#"><i class="fa-solid fa-camera-retro"></i></a>
-        <a href="#"><i class="fa-regular fa-calendar-days"></i></a>
-        <a href="#"><i class="fa-solid fa-circle-plus"></i></a>
-        <a href="#">
-          <img src="../icons/hanger.svg" class="h-5 w-5 text-black" alt="" />
-        </a>
-        <a href="#"><i class="fa-regular fa-bookmark"></i></a>
-      </div>
-    </div>
-    <div class="pt-6 ml-12">
-      <div class="flex flex-wrap -m-1 md:-m-2">
-        <div class="flex flex-wrap w-1/3">
-          <div class="w-full p-1 md:p-2">
-            <img
-              src="../images/warren-wong-qH4_83WoIi8-unsplash.jpg"
-              width="246"
-              class="h-80"
-              alt=""
-            />
-          </div>
-        </div>
-        <div class="flex flex-wrap w-1/3">
-          <div class="w-full p-1 md:p-2">
-            <img
-              src="../images/pexels-mohamed-abdelghaffar-771742.jpg"
-              width="246"
-              class="h-80"
-              alt=""
-            />
-          </div>
-        </div>
-        <div class="flex flex-wrap w-1/3">
-          <div class="w-full p-1 md:p-2">
-            <img
-              src="../images/pexels-unpetitvoyou-3317133.jpg"
-              width="246"
-              class="h-80"
-              alt=""
-            />
-          </div>
-        </div>
-        <div class="flex flex-wrap w-1/3">
-          <div class="w-full p-1 md:p-2">
-            <img
-              src="../images/pexels-fidel-hajj-2814832.jpg"
-              width="246"
-              class="h-80"
-              alt=""
-            />
-          </div>
-        </div>
-        <div class="flex flex-wrap w-1/3">
-          <div class="w-full p-1 md:p-2">
-            <img
-              src="../images/man-6609820_640.jpg"
-              width="246"
-              class="h-80"
-              alt=""
-            />
-          </div>
-        </div>
-        <div class="flex flex-wrap w-1/3">
-          <div class="w-full p-1 md:p-2">
-            <img
-              src="../images/man-6612936_640.jpg"
-              width="246"
-              class="h-80"
-              alt=""
-            />
-          </div>
+      <div>
+        <ul class="tab-menu flex items-center justify-between">
+          <li
+            @click="select('PostList')"
+            :class="{ active: tab === 'PostList' }"
+          >
+            <i class="fa-solid fa-camera-retro"></i>
+          </li>
+          <li
+            @click="select('Calendar')"
+            :class="{ active: tab === 'Calendar' }"
+          >
+            <i class="fa-regular fa-calendar-days"></i>
+          </li>
+          <li
+            @click="select('CreatePost')"
+            :class="{ active: tab === 'CreatePost' }"
+          >
+            <i class="fa-solid fa-circle-plus"></i>
+          </li>
+          <li
+            @click="select('ItemList')"
+            :class="{ active: tab === 'ItemList' }"
+          >
+            <img src="../icons/hanger.svg" class="h-5 w-5 text-black" alt="" />
+          </li>
+          <li
+            @click="select('Bookmark')"
+            :class="{ active: tab === 'Bookmark' }"
+          >
+            <i class="fa-regular fa-bookmark"></i>
+          </li>
+        </ul>
+        <div class="tabs-content">
+          <component :is="tab"></component>
         </div>
       </div>
     </div>
@@ -120,8 +84,37 @@
 </template>
 
 <script>
-export default {};
+import PostList from './PostList.vue';
+import Calendar from './Calendar.vue';
+import CreatePost from './CreatePost.vue';
+import ItemList from './ItemList.vue';
+import Bookmark from './Bookmark.vue';
+
+export default {
+  components: {
+    PostList,
+    Calendar,
+    CreatePost,
+    ItemList,
+    Bookmark,
+  },
+  data() {
+    return {
+      tab: 'PostList',
+    };
+  },
+  methods: {
+    select: function (value) {
+      this.tab = value;
+    },
+  },
+};
 </script>
 
-<style>
+<style scoped>
+.tab-menu li.active {
+  background: #d1d5de;
+  color: black;
+  border-bottom: 2px solid black;
+}
 </style>
