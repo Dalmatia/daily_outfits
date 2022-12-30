@@ -5,12 +5,21 @@
       <div class="flex flex-wrap -m-1 md:-m-2">
         <div class="flex flex-wrap w-1/3">
           <div class="w-full p-1 md:p-2">
-            <img
-              src="../images/warren-wong-qH4_83WoIi8-unsplash.jpg"
-              width="246"
-              class="h-80"
-              alt=""
-            />
+            <router-link
+              :to="{
+                name: 'OutfitDetail',
+                params: {
+                  id: 'warren-wong-qH4_83WoIi8-unsplash.jpg',
+                },
+              }"
+            >
+              <img
+                src="../images/warren-wong-qH4_83WoIi8-unsplash.jpg"
+                width="246"
+                class="h-80"
+                alt=""
+              />
+            </router-link>
           </div>
         </div>
         <div class="flex flex-wrap w-1/3">

@@ -1,5 +1,5 @@
 <template>
-  <div class="bg-gray-300">
+  <div class="bg-slate-100">
     <header>
       <NavbarVue />
     </header>
