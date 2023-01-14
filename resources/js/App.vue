@@ -3,7 +3,7 @@
     <header>
       <NavbarVue />
     </header>
-    <main class="container px-5 py-2 mx-auto lg:pt-12 lg:px-32">
+    <main>
       <router-view></router-view>
     </main>
   </div>

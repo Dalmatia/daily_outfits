@@ -1,67 +1,43 @@
 <template>
   <div>
-    <div
-      class="
-        flex flex-wrap
-        sm:justify-start sm:flex-nowrap
-        z-50
-        w-full
-        bg-white
-        border-b border-gray-200
-        text-sm
-        py-3
-        sm:py-0
-      "
-    >
+    <div class="border-b px-4 py-3 bg-white">
       <nav
-        class="
-          relative
-          max-w-[85rem]
-          w-full
-          mx-auto
-          px-4
-          sm:flex sm:items-center sm:justify-between sm:px-6
-          lg:px-8
-        "
+        class="flex flex-wrap items-center justify-between md:justify-around"
       >
-        <div class="flex items-center justify-center">
-          <h1 class="font-aurore text-2xl my-3 md:px-2">
-            <router-link :to="{ name: 'Home' }">daily outfit</router-link>
-          </h1>
-        </div>
-        <div class="flex items-center justify-center">
+        <h1 class="font-aurore text-xl h-6">
+          <router-link :to="{ name: 'Home' }">daily outfit</router-link>
+        </h1>
+        <div class="relative hidden sm:block text-gray-500">
           <input
             type="text"
             class="
               search
-              px-6
+              max-w-xs
               border
+              rounded
               bg-gray-200
-              text-dark
-              rounded-md
-              p-1
+              px-2
+              text-center
               outline-none
-              text-xl
-              my-3
-              md:px-2
+              focus:border-gray-400
             "
             name="search"
-            placeholder="&#xF002;    コーディネートを探す"
+            placeholder="&#xF002;コーディネートを探す"
           />
         </div>
         <div>
           <div class="nav-icons">
             <router-link :to="{ name: 'Home' }">
-              <i class="icon fa-solid fa-house text-xl my-3 md:px-3"></i>
+              <i class="icon fa-solid fa-house text-xl md:px-1.5"></i>
             </router-link>
             <a href="#">
-              <i class="icon fa-regular fa-plus text-xl my-3 md:px-3"></i>
+              <i class="icon fa-regular fa-plus text-xl md:px-1.5"></i>
             </a>
             <a href="#">
-              <i class="icon fa-regular fa-heart text-xl my-3 md:px-3"></i>
+              <i class="icon fa-regular fa-heart text-xl md:px-1.5"></i>
             </a>
             <router-link :to="{ name: 'Profile' }">
-              <i class="icon fa-regular fa-user text-xl my-3 md:px-3"></i>
+              <i class="icon fa-regular fa-user text-xl md:px-1.5"></i>
             </router-link>
           </div>
         </div>
@@ -94,7 +70,7 @@ input.search {
     left: 0;
     right: 0;
     background: white;
-    padding: 0;
+    padding: 8px;
     justify-content: space-around;
   }
 }
