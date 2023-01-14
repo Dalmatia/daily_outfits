@@ -3,7 +3,7 @@
     <header>
       <NavbarVue />
     </header>
-    <main>
+    <main class="container mx-auto">
       <router-view></router-view>
     </main>
   </div>

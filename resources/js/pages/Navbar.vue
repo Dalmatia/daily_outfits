@@ -16,6 +16,7 @@
               border
               rounded
               bg-gray-200
+              p-1
               px-2
               text-center
               outline-none
