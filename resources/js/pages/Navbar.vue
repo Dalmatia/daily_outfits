@@ -1,46 +1,69 @@
 <template>
   <div>
-    <div class="border-b px-4 py-3 bg-white">
+    <div class="border-b px-4 py-2.5 bg-white">
       <nav
         class="flex flex-wrap items-center justify-between md:justify-around"
       >
         <h1 class="font-aurore text-xl h-6">
           <router-link :to="{ name: 'Home' }">daily outfit</router-link>
         </h1>
-        <div class="relative hidden sm:block text-gray-500">
+        <div
+          class="
+            w-[250px]
+            bg-gray-200
+            py-1.5
+            px-5
+            rounded-md
+            hidden
+            sm:flex
+            items-center
+            space-x-2
+          "
+        >
+          <i class="fas fa-search text-gray-400"></i>
           <input
             type="text"
-            class="
-              search
-              max-w-xs
-              border
-              rounded
-              bg-gray-200
-              p-1
-              px-2
-              text-center
-              outline-none
-              focus:border-gray-400
-            "
+            class="outline-0 bg-gray-200"
             name="search"
-            placeholder="&#xF002;コーディネートを探す"
+            placeholder="コーディネートを探す"
           />
         </div>
         <div>
-          <div class="nav-icons">
-            <router-link :to="{ name: 'Home' }">
-              <i class="icon fa-solid fa-house text-xl md:px-1.5"></i>
-            </router-link>
-            <a href="#">
-              <i class="icon fa-regular fa-plus text-xl md:px-1.5"></i>
-            </a>
-            <a href="#">
-              <i class="icon fa-regular fa-heart text-xl md:px-1.5"></i>
-            </a>
-            <router-link :to="{ name: 'Profile' }">
-              <i class="icon fa-regular fa-user text-xl md:px-1.5"></i>
-            </router-link>
+          <div v-if="loggedIn">
+            <ul class="nav-icons">
+              <li>
+                <router-link :to="{ name: 'Home' }">
+                  <i class="icon fa-solid fa-house text-xl md:px-1.5"></i>
+                </router-link>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="icon fa-regular fa-plus text-xl md:px-1.5"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                  <i class="icon fa-regular fa-heart text-xl md:px-1.5"></i>
+                </a>
+              </li>
+              <li>
+                <router-link :to="{ name: 'Profile' }">
+                  <i class="icon fa-regular fa-user text-xl md:px-1.5"></i>
+                </router-link>
+              </li>
+            </ul>
           </div>
+          <button class="text-gray-500" v-if="loggedIn">
+            <span>{{ name }}</span>
+            <a href="#" @click="logout">ログアウト</a>
+          </button>
+          <router-link
+            v-if="!loggedIn"
+            :to="{ name: 'Login' }"
+            class="text-gray-500"
+          >
+            ログイン/ 新規登録
+          </router-link>
         </div>
       </nav>
     </div>
@@ -48,17 +71,48 @@
 </template>
 
 <script>
-export default {};
+import axios from 'axios';
+
+export default {
+  data() {
+    return {
+      name: '',
+      loggedIn: false,
+    };
+  },
+  mounted() {
+    if (localStorage.getItem('authenticated')) {
+      this.loggedIn = true;
+    } else {
+      this.loggedIn = false;
+    }
+    axios
+      .get('/api/user')
+      .then((response) => {
+        this.name = response.data.name;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+  methods: {
+    logout() {
+      axios
+        .post('/api/logout')
+        .then((response) => {
+          this.$router.go({ name: 'Home' });
+          localStorage.removeItem('authenticated');
+          this.$emit('updateHeader');
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
+  },
+};
 </script>
 
 <style scoped>
-input.search {
-  font-family: FontAwesome;
-  font-style: normal;
-  font-weight: normal;
-  text-decoration: inherit;
-}
-
 .nav-icons {
   display: flex;
   align-items: center;

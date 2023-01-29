@@ -4,7 +4,7 @@
       <NavbarVue />
     </header>
     <main class="container mx-auto">
-      <router-view></router-view>
+      <router-view @update-header="updateHeader"></router-view>
     </main>
   </div>
 </template>
@@ -14,6 +14,23 @@ import NavbarVue from './pages/Navbar.vue';
 export default {
   components: {
     NavbarVue,
+  },
+  data() {
+    return {
+      loggedIn: false,
+    };
+  },
+  mounted() {
+    if (localStorage.getItem('authenticated')) {
+      this.loggedIn = true;
+    } else {
+      this.loggedIn = false;
+    }
+  },
+  methods: {
+    updateHeader() {
+      this.loggedIn = !this.loggedIn;
+    },
   },
 };
 </script>
