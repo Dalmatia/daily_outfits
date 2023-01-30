@@ -92,7 +92,11 @@ export default {
         this.name = response.data.name;
       })
       .catch((error) => {
-        console.log(error);
+        if (error.response.status === 401) {
+          this.$emit('updateHeader');
+          localStorage.removeItem('authenticated');
+          this.$router.push({ name: 'Login' });
+        }
       });
   },
   methods: {
