@@ -1,6 +1,6 @@
 <template>
   <div class="bg-slate-100">
-    <header>
+    <header class="sticky top-0">
       <NavbarVue />
     </header>
     <main class="container mx-auto">

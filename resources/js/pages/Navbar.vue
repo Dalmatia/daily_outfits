@@ -46,17 +46,131 @@
                   <i class="icon fa-regular fa-heart text-xl md:px-1.5"></i>
                 </a>
               </li>
-              <li>
+              <li class="md:hidden">
                 <router-link :to="{ name: 'Profile' }">
                   <i class="icon fa-regular fa-user text-xl md:px-1.5"></i>
                 </router-link>
               </li>
+              <li class="hidden md:inline-block">
+                <div class="relative">
+                  <button @click="toggleVisibility">
+                    <i class="icon fa-regular fa-user text-xl md:px-1.5"></i>
+                  </button>
+                  <div
+                    v-if="menubar"
+                    class="
+                      absolute
+                      w-48
+                      mt-2
+                      right-0
+                      bg-white
+                      rounded-md
+                      shadow-inner
+                      z-20
+                    "
+                  >
+                    <router-link
+                      :to="{ name: 'Profile' }"
+                      class="
+                        block
+                        px-4
+                        py-2
+                        text-sm
+                        capitalize
+                        text-gray-500
+                        hover:bg-black hover:text-white
+                      "
+                    >
+                      プロフィール
+                    </router-link>
+                    <a
+                      href="#"
+                      class="
+                        block
+                        px-4
+                        py-2
+                        text-sm
+                        capitalize
+                        text-gray-500
+                        hover:bg-black hover:text-white
+                      "
+                    >
+                      設定
+                    </a>
+                    <a
+                      href="#"
+                      class="
+                        block
+                        px-4
+                        py-2
+                        text-sm
+                        capitalize
+                        text-gray-500
+                        hover:bg-black hover:text-white
+                      "
+                      @click="logout"
+                      >ログアウト</a
+                    >
+                  </div>
+                </div>
+              </li>
             </ul>
           </div>
-          <button class="text-gray-500" v-if="loggedIn">
-            <span>{{ name }}</span>
-            <a href="#" @click="logout">ログアウト</a>
-          </button>
+          <div
+            v-if="loggedIn"
+            class="flex justify-center items-center md:hidden"
+          >
+            <div class="relative">
+              <button
+                class="text-gray-500 px-4 my-2 relative focus:outline-none"
+                @click="toggleVisibility"
+              >
+                {{ name }}
+              </button>
+              <div
+                v-if="menubar"
+                class="
+                  absolute
+                  w-48
+                  mt-2
+                  right-0
+                  bg-white
+                  rounded-md
+                  shadow-xl
+                  z-20
+                "
+              >
+                <a
+                  href="#"
+                  class="
+                    block
+                    px-4
+                    py-2
+                    text-sm
+                    capitalize
+                    text-gray-500
+                    hover:bg-black hover:text-white
+                  "
+                >
+                  設定
+                </a>
+                <a
+                  href="#"
+                  class="
+                    block
+                    px-4
+                    py-2
+                    text-sm
+                    capitalize
+                    text-gray-500
+                    hover:bg-black hover:text-white
+                  "
+                  @click="logout"
+                  >ログアウト</a
+                >
+              </div>
+            </div>
+          </div>
           <router-link
             v-if="!loggedIn"
             :to="{ name: 'Login' }"
@@ -78,6 +192,7 @@ export default {
     return {
       name: '',
       loggedIn: false,
+      menubar: false,
     };
   },
   mounted() {
@@ -112,6 +227,9 @@ export default {
         .catch((error) => {
           console.log(error);
         });
+    },
+    toggleVisibility() {
+      this.menubar = !this.menubar;
     },
   },
 };
