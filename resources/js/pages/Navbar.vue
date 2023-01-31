@@ -104,9 +104,10 @@ export default {
       axios
         .post('/api/logout')
         .then((response) => {
-          this.$router.go({ name: 'Home' });
+          this.$router.push({ name: 'Home' });
           localStorage.removeItem('authenticated');
           this.$emit('updateHeader');
+          location.reload();
         })
         .catch((error) => {
           console.log(error);
