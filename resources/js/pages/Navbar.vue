@@ -37,9 +37,9 @@
                 </router-link>
               </li>
               <li>
-                <a href="#">
+                <router-link :to="{ name: 'CreatePosts' }">
                   <i class="icon fa-regular fa-plus text-xl md:px-1.5"></i>
-                </a>
+                </router-link>
               </li>
               <li>
                 <a href="#">
