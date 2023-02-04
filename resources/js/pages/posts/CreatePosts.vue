@@ -37,26 +37,30 @@
                 duration-100
                 px-3
                 py-2
+                mb-2
               "
               type="file"
               name="outfit"
               @change="onFileChange"
             />
             <output class="form-output" v-if="preview">
-              <img class="img-fluid img-thumbnail" :src="preview" alt="" />
+              <img
+                class="object-scale-down h-80 w-[28rem]"
+                :src="preview"
+                alt=""
+              />
             </output>
           </div>
 
           <div>
             <label
-              for="outfit"
+              for="description"
               class="inline-block text-gray-800 text-sm sm:text-base mb-2"
-              >何か書く(コーディネートのポイントなど)</label
+              >何か書く(コーディネートのポイントなど):</label
             >
             <textarea
               class="
                 w-full
-                h-24
                 bg-gray-50
                 text-gray-800
                 border
@@ -75,10 +79,26 @@
 
           <div>
             <label
-              for=""
+              for="post_date"
               class="inline-block text-gray-800 text-sm sm:text-base mb-2"
               >投稿日:
             </label>
+            <Calendar
+              class="
+                w-full
+                text-gray-800
+                rounded
+                outline-none
+                transition
+                duration-100
+                px-3
+                py-2
+              "
+              input-id="icon"
+              v-model="post_date"
+              :show-icon="true"
+              placeholder="日付を選択する"
+            />
           </div>
 
           <button
@@ -119,11 +139,38 @@ export default {
       required: true,
     },
   },
+  created() {
+    let today = new Date();
+    let month = today.getMonth();
+    let year = today.getFullYear();
+    let prevMonth = month === 0 ? 11 : month - 1;
+    let prevYear = prevMonth === 11 ? year - 1 : year;
+    let nextMonth = month === 11 ? 0 : month + 1;
+    let nextYear = nextMonth === 0 ? year + 1 : year;
+    this.minDate = new Date();
+    this.minDate.setMonth(prevMonth);
+    this.minDate.setFullYear(prevYear);
+    this.maxDate = new Date();
+    this.maxDate.setMonth(nextMonth);
+    this.maxDate.setFullYear(nextYear);
+
+    let invalidDate = new Date();
+    invalidDate.setDate(today.getDate() - 1);
+    this.invalidDates = [today, invalidDate];
+  },
   data() {
     return {
-      outfit_date: new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
-        .toISOString()
-        .substr(0, 10),
+      post_date: null,
+      responsiveOptions: [
+        {
+          breakpoint: '1400px',
+          numMonths: 2,
+        },
+        {
+          breakpoint: '1200px',
+          numMonths: 1,
+        },
+      ],
       modal: false,
       outfit: null,
       description: null,
@@ -135,7 +182,7 @@ export default {
       const formData = new FormData();
       formData.append('outfit', this.outfit);
       formData.append('description', this.description);
-      formData.append('outfit_date', this.outfit_date);
+      formData.append('post_date', this.post_date);
 
       axios
         .post('/api/outfits', formData)
