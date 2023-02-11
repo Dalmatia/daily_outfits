@@ -14,6 +14,10 @@
         投稿画面
       </h2>
 
+      <div class="success-msg" v-if="success">
+        <i class="fa fa-check"></i>
+        投稿が完了しました!
+      </div>
       <form class="max-w-lg border rounded-lg mx-auto" @submit.prevent="submit">
         <div class="flex flex-col gap-4 p-4 md:p-8">
           <div>
@@ -27,7 +31,7 @@
               class="
                 w-full
                 bg-gray-50
-                text-gray-800
+                text-gray-400
                 border
                 focus:ring
                 ring-indigo-300
@@ -41,15 +45,18 @@
               "
               type="file"
               name="outfit"
-              @change="onFileChange"
+              @input="grabFile"
             />
-            <output class="form-output" v-if="preview">
+            <output class="preview" v-if="preview">
               <img
                 class="object-scale-down h-80 w-[28rem]"
                 :src="preview"
                 alt=""
               />
             </output>
+            <span v-if="errors.outfit" class="error">
+              {{ errors.outfit[0] }}
+            </span>
           </div>
 
           <div>
@@ -73,7 +80,7 @@
               "
               maxlength="200"
               name="description"
-              v-model="description"
+              v-model="fields.description"
             ></textarea>
           </div>
 
@@ -94,11 +101,15 @@
                 px-3
                 py-2
               "
-              input-id="icon"
-              v-model="post_date"
+              input-id="post_date"
+              dateFormat="yy-mm-dd"
+              v-model="fields.post_date"
               :show-icon="true"
               placeholder="日付を選択する"
             />
+            <span v-if="errors.post_date" class="error">
+              {{ errors.post_date[0] }}
+            </span>
           </div>
 
           <button
@@ -132,35 +143,15 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
-  props: {
-    value: {
-      type: Boolean,
-      required: true,
-    },
-  },
-  created() {
-    let today = new Date();
-    let month = today.getMonth();
-    let year = today.getFullYear();
-    let prevMonth = month === 0 ? 11 : month - 1;
-    let prevYear = prevMonth === 11 ? year - 1 : year;
-    let nextMonth = month === 11 ? 0 : month + 1;
-    let nextYear = nextMonth === 0 ? year + 1 : year;
-    this.minDate = new Date();
-    this.minDate.setMonth(prevMonth);
-    this.minDate.setFullYear(prevYear);
-    this.maxDate = new Date();
-    this.maxDate.setMonth(nextMonth);
-    this.maxDate.setFullYear(nextYear);
-
-    let invalidDate = new Date();
-    invalidDate.setDate(today.getDate() - 1);
-    this.invalidDates = [today, invalidDate];
-  },
   data() {
     return {
-      post_date: null,
+      success: false,
+      fields: {
+        post_date: null,
+      },
+      preview: '',
       responsiveOptions: [
         {
           breakpoint: '1400px',
@@ -171,52 +162,36 @@ export default {
           numMonths: 1,
         },
       ],
-      modal: false,
-      outfit: null,
-      description: null,
-      preview: null,
+      errors: {},
     };
   },
   methods: {
-    submit: function () {
-      const formData = new FormData();
-      formData.append('outfit', this.outfit);
-      formData.append('description', this.description);
-      formData.append('post_date', this.post_date);
-
+    grabFile(e) {
+      const file = e.target.files[0];
+      this.fields.outfit = file;
+      this.preview = URL.createObjectURL(file);
+      URL.revokeObjectURL(file);
+    },
+    submit() {
       axios
-        .post('/api/outfits', formData)
-        .then((response) => {
-          console.log(response);
+        .post('/api/posts', this.fields, {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        })
+        .then(() => {
+          this.fields = {};
+          this.preview = null;
+          this.fields.post_date = null;
+          this.errors = {};
+          this.success = true;
+          setTimeout(() => {
+            this.success = false;
+          }, 2500);
+          // this.$router.push({ name: 'Home' });
         })
         .catch((error) => {
-          console.log(error.response);
+          this.errors = error.response.data.errors;
+          this.success = false;
         });
-    },
-    onFileChange(event) {
-      if (event.target.files.length === 0) {
-        this.reset();
-        return false;
-      }
-
-      if (!event.target.files[0].type.match('image.*')) {
-        this.reset();
-        return false;
-      }
-
-      const reader = new FileReader();
-
-      reader.onload = (e) => {
-        this.preview = e.target.result;
-      };
-
-      reader.readAsDataURL(event.target.files[0]);
-      this.outfit = event.target.files[0];
-    },
-    reset() {
-      this.preview = '';
-      this.outfit = null;
-      this.$el.querySelector('input[type="file"]').value = null;
     },
   },
 };

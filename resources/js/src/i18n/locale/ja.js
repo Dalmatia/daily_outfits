@@ -70,7 +70,7 @@ export default {
     today: '今日',
     weekHeader: '週',
     firstDayOfWeek: 0,
-    dateFormat: 'yy/mm/dd',
+    dateFormat: 'yy-mm-dd',
     weak: '弱い',
     medium: '普通',
     strong: '強い',
