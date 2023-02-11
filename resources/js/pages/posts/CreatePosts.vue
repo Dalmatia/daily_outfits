@@ -145,6 +145,7 @@
 <script>
 import axios from 'axios';
 export default {
+  emits: ['updateHeader'],
   data() {
     return {
       success: false,

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OutfitController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -26,3 +27,4 @@ Route::middleware('auth:sanctum')->post('posts', [OutfitController::class, 'crea
 
 Route::post('register', [RegisteredUserController::class, 'store']);
 Route::post('login', [AuthenticatedSessionController::class, 'store']);
+Route::get('home-posts', [HomeController::class, 'index']);
