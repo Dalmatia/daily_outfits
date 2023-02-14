@@ -174,6 +174,9 @@ export default {
         .post('/api/register', this.fields)
         .then(() => {
           this.$router.push({ name: 'Home' });
+          localStorage.setItem('authenticated', 'true');
+          this.$emit('updateHeader');
+          location.reload();
         })
         .catch((error) => {
           this.errors = error.response.data.errors;

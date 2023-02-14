@@ -87,7 +87,7 @@
           <div>
             <label
               for="post_date"
-              class="inline-block text-gray-800 text-sm sm:text-base mb-2"
+              class="inline-block text-gray-800 text-sm sm:text-base"
               >投稿日:
             </label>
             <Calendar
@@ -99,7 +99,7 @@
                 transition
                 duration-100
                 px-3
-                py-2
+                py-3
               "
               input-id="post_date"
               dateFormat="yy-mm-dd"
@@ -110,6 +110,34 @@
             <span v-if="errors.post_date" class="error">
               {{ errors.post_date[0] }}
             </span>
+
+            <!-- <label
+              for="items"
+              class="inline-block text-gray-800 text-sm sm:text-base mb-2"
+            >
+              着用アイテム:
+            </label>
+            <select
+              class="
+                w-full
+                text-gray-800
+                border
+                rounded
+                outline-none
+                transition
+                duration-100
+                px-3
+                py-2
+                mb-2
+              "
+              v-model="fields.item_id"
+              id="categories"
+            >
+              <option disabled value="">選択してください</option>
+              <option :value="item.id" v-for="item in items" :key="item.id">
+                {{ item }}
+              </option>
+            </select> -->
           </div>
 
           <button
@@ -186,8 +214,8 @@ export default {
           this.success = true;
           setTimeout(() => {
             this.success = false;
+            this.$router.push({ name: 'Home' });
           }, 2500);
-          // this.$router.push({ name: 'Home' });
         })
         .catch((error) => {
           this.errors = error.response.data.errors;

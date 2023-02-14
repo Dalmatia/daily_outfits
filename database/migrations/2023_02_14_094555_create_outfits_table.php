@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('outfit_image');
             $table->text('description')->nullable();
             $table->date('post_date');
+            $table->foreignId('item_id')->nullable()->constrained()->cascadeOnDelete();
             $table->timestamp('created_at')->useCurrent()->nullable();
             $table->timestamp('updated_at')->useCurrent()->nullable();
             $table->softDeletes();

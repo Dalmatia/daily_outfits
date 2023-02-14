@@ -19,12 +19,14 @@ class OutfitController extends Controller
         $outfit_image = 'storage/' . $request->file('outfit')->store('outfitsImages', 'public');
         $description = $request->input('description');
         $post_date = \Carbon\Carbon::parse($request->post_date)->timezone('Asia/Tokyo');
+        $item_id = $request->item_id;
 
         $outfit = new Outfit();
         $outfit->user_id = $user_id;
         $outfit->outfit_image = $outfit_image;
         $outfit->description = $description;
         $outfit->post_date = $post_date;
+        $outfit->item_id = $item_id;
         $outfit->save();
 
         return response($outfit, 201);

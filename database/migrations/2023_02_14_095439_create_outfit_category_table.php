@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('outfit_id')->constrained()->cascadeOnDelete();
             $table->foreignId('category_id')->constrained()->cascadeOnDelete();
+            $table->foreignId('color_id')->constrained()->cascadeOnDelete();
             $table->timestamps();
         });
     }
