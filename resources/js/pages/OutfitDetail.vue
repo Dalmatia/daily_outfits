@@ -4,7 +4,7 @@
       <h2 class="text-2xl underline mb-6 pt-5">コーディネート詳細</h2>
       <div class="w-auto pr-auto bg-white text-coolGray-100">
         <img
-          src="../images/warren-wong-qH4_83WoIi8-unsplash.jpg"
+          :src="`/${outfit.outfit_image}`"
           alt=""
           class="
             object-cover object-center
@@ -23,18 +23,17 @@
         class="max-w-2xl px-8 py-4 mx-auto bg-white rounded-lg shadow-md"
         style="cursor: auto"
       >
-        <h3 class="text-xl font-bold mb-1">Amadeusu さんのコーディネート</h3>
-        <p class="text-gray-400">
-          モデル情報: <a href="" class="text-blue-400">MEN / 20~30代</a>
-        </p>
+        <h3 class="text-xl font-bold mb-1">
+          {{ outfit.user }} さんのコーディネート
+        </h3>
         <div class="border-t border-gray-300"></div>
         <p class="my-2">
-          これはテスト投稿です。 こんばんは、今日はいい天気ですね。
-          今日のコーディネートは普通です。
+          {{ outfit.description }}
         </p>
         <div class="border-t border-gray-300"></div>
         <p class="text-gray-400">
-          <i class="far fa-clock text-gray-400"></i> 2022/12/28 00:49:00
+          <i class="far fa-clock text-gray-400"></i>
+          投稿日:{{ outfit.post_date }}
         </p>
       </div>
       <div class="rounded-md shadow-md mt-4 pr-auto bg-white text-coolGray-100">
@@ -182,7 +181,23 @@
 </template>
 
 <script>
-export default {};
+export default {
+  emits: ['updateHeader'],
+  props: ['id'],
+  data() {
+    return {
+      outfit: {},
+    };
+  },
+  mounted() {
+    axios
+      .get('/api/posts/' + this.id)
+      .then((response) => (this.outfit = response.data.data))
+      .catch((error) => {
+        console.log(error);
+      });
+  },
+};
 </script>
 
 <style>

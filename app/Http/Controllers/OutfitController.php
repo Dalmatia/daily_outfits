@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\OutfitResource;
 use App\Models\Outfit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -30,5 +31,10 @@ class OutfitController extends Controller
         $outfit->save();
 
         return response($outfit, 201);
+    }
+
+    public function show(Outfit $outfit)
+    {
+        return new OutfitResource($outfit);
     }
 }

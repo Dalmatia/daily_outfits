@@ -28,3 +28,4 @@ Route::middleware('auth:sanctum')->post('posts', [OutfitController::class, 'crea
 Route::post('register', [RegisteredUserController::class, 'store']);
 Route::post('login', [AuthenticatedSessionController::class, 'store']);
 Route::get('home-posts', [HomeController::class, 'index']);
+Route::get('posts/{outfit:id}', [OutfitController::class, 'show']);
