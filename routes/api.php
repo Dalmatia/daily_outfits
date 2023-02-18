@@ -29,3 +29,4 @@ Route::post('register', [RegisteredUserController::class, 'store']);
 Route::post('login', [AuthenticatedSessionController::class, 'store']);
 Route::get('home-posts', [HomeController::class, 'index']);
 Route::get('posts/{outfit:id}', [OutfitController::class, 'show']);
+Route::get('posts', [OutfitController::class, 'index']);

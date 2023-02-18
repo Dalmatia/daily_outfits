@@ -9,6 +9,13 @@ use Illuminate\Http\Request;
 
 class OutfitController extends Controller
 {
+    public function index()
+    {
+        return OutfitResource::collection(
+            Outfit::where('user_id', auth()->user()->id)->latest()->get()
+        );
+    }
+
     public function create(Request $request)
     {
         $request->validate([
