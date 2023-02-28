@@ -24,6 +24,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionController::class, 'destroy']);
 Route::middleware('auth:sanctum')->post('posts', [OutfitController::class, 'create']);
+Route::middleware('auth:sanctum')->put('posts/{outfit:id}', [OutfitController::class, 'update']);
 
 Route::post('register', [RegisteredUserController::class, 'store']);
 Route::post('login', [AuthenticatedSessionController::class, 'store']);

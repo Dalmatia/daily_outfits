@@ -1,5 +1,13 @@
 <template>
   <div class="lg:w-8/12 lg:mx-auto mb-8">
+    <div class="success-msg" v-if="editSuccess">
+      <i class="fa fa-check"></i>
+      編集が完了しました!
+    </div>
+    <div class="success-msg" v-if="success">
+      <i class="fa fa-check"></i>
+      投稿の削除が完了しました!
+    </div>
     <header class="flex flex-wrap items-center p-4 md:py-8">
       <div class="md:w-3/12 md:ml-16">
         <!-- profile image -->
@@ -105,9 +113,11 @@ export default {
     ItemList,
     Bookmark,
   },
+  props: ['editSuccess'],
   data() {
     return {
       tab: 'PostList',
+      success: false
     };
   },
   methods: {

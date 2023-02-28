@@ -6,6 +6,7 @@ use App\Http\Resources\OutfitResource;
 use App\Models\Outfit;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
 
 class OutfitController extends Controller
 {
@@ -43,5 +44,28 @@ class OutfitController extends Controller
     public function show(Outfit $outfit)
     {
         return new OutfitResource($outfit);
+    }
+
+    public function update(Request $request, Outfit $outfit)
+    {
+        $request->validate([
+            'outfit' => 'nullable | image',
+            'post_date' => 'required'
+        ]);
+
+        $description = $request->input('description');
+        $post_date = \Carbon\Carbon::parse($request->post_date)->timezone('Asia/Tokyo')->format('Y-m-d');
+        $item_id = $request->item_id;
+
+        if ($request->file('outfit')) {
+            File::delete($outfit->outfit_image);
+            $outfit_image = 'storage/' . $request->file('outfit')->store('outfitsImages', 'public');
+            $outfit->outfit_image = $outfit_image;
+        }
+
+        $outfit->description = $description;
+        $outfit->post_date = $post_date;
+        $outfit->item_id = $item_id;
+        return $outfit->save();
     }
 }

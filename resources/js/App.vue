@@ -4,7 +4,8 @@
       <NavbarVue />
     </header>
     <main class="container mx-auto">
-      <router-view @update-header="updateHeader"></router-view>
+      <router-view @update-header="updateHeader" @show-edit-success="showEditSuccess"
+        :editSuccess="editSuccess"></router-view>
     </main>
   </div>
 </template>
@@ -18,6 +19,7 @@ export default {
   data() {
     return {
       loggedIn: false,
+      editSuccess: false,
     };
   },
   mounted() {
@@ -31,9 +33,14 @@ export default {
     updateHeader() {
       this.loggedIn = !this.loggedIn;
     },
+    showEditSuccess() {
+      this.editSuccess = true;
+      setTimeout(() => {
+        this.editSuccess = false;
+      }, 2500);
+    }
   },
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

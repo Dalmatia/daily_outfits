@@ -5,6 +5,7 @@ import Register from '../pages/Register.vue';
 import Profile from '../profile/Profile.vue';
 import OutfitDetail from '../pages/OutfitDetail.vue';
 import CreatePosts from '../pages/posts/CreatePosts.vue';
+import EditPosts from '../pages/posts/EditPosts.vue';
 
 const routes = [
     {
@@ -40,6 +41,13 @@ const routes = [
         name: 'CreatePosts',
         component: CreatePosts,
         meta: { requiresAuth: true },
+    },
+    {
+        path: '/posts/:id/edit',
+        name: 'EditPosts',
+        component: EditPosts,
+        meta: { requiresAuth: true },
+        props: true,
     },
 ];
 

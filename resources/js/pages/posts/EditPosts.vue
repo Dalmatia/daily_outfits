@@ -2,12 +2,12 @@
   <div class="bg-white my-6 py-6 sm:py-8 lg:py-12">
     <div class="max-w-screen-2xl px-4 md:px-8 mx-auto">
       <h2 class="text-gray-800 text-2xl lg:text-3xl font-bold text-center mb-4 md:mb-8">
-        投稿画面
+        編集画面
       </h2>
 
       <div class="success-msg" v-if="success">
         <i class="fa fa-check"></i>
-        投稿が完了しました!
+        編集が完了しました!
       </div>
       <form class="max-w-lg border rounded-lg mx-auto" @submit.prevent="submit">
         <div class="flex flex-col gap-4 p-4 md:p-8">
@@ -75,7 +75,7 @@
 
           <button type="submit"
             class="block bg-gray-800 hover:bg-gray-700 active:bg-gray-600 focus-visible:ring ring-gray-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3">
-            投稿する
+            更新する
           </button>
         </div>
       </form>
@@ -88,6 +88,7 @@
 import axios from 'axios';
 export default {
   emits: ['updateHeader'],
+  props: ['id', 'editSuccess'],
   data() {
     return {
       success: false,
@@ -116,26 +117,39 @@ export default {
       URL.revokeObjectURL(file);
     },
     submit() {
+      const edit = new FormData();
+      if (this.fields.outfit) {
+        edit.append('outfit', this.fields.outfit);
+      }
+      edit.append('description', this.fields.description);
+      edit.append('post_date', this.fields.post_date);
+
+      edit.append('_method', 'PUT');
+
       axios
-        .post('/api/posts', this.fields, {
+        .post(`/api/posts/${this.id}`, edit, {
           headers: { 'Content-Type': 'multipart/form-data' },
         })
-        .then(() => {
-          this.fields = {};
-          this.preview = null;
-          this.fields.post_date = null;
-          this.errors = {};
-          this.success = true;
-          setTimeout(() => {
-            this.success = false;
-            this.$router.push({ name: 'Home' });
-          }, 2500);
+        .then((res) => {
+          this.$emit('showEditSuccess');
+
+          this.$router.push({ name: 'Profile' })
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
-          this.success = false;
         });
     },
+  },
+  mounted() {
+    axios
+      .get('/api/posts/' + this.id)
+      .then((response) => {
+        this.fields = response.data.data;
+        this.preview = '/' + response.data.data.outfit_image;
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   },
 };
 </script>
