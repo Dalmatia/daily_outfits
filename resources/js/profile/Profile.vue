@@ -4,10 +4,6 @@
       <i class="fa fa-check"></i>
       編集が完了しました!
     </div>
-    <div class="success-msg" v-if="success">
-      <i class="fa fa-check"></i>
-      投稿の削除が完了しました!
-    </div>
     <header class="flex flex-wrap items-center p-4 md:py-8">
       <div class="md:w-3/12 md:ml-16">
         <!-- profile image -->

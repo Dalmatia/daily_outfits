@@ -76,4 +76,13 @@ class OutfitController extends Controller
         $outfit->item_id = $item_id;
         return $outfit->save();
     }
+
+    public function destroy(Outfit $outfit)
+    {
+        if (auth()->user()->id !== $outfit->user->id) {
+            return abort(403);
+        }
+
+        return $outfit->delete();
+    }
 }
