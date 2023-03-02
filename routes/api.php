@@ -26,6 +26,7 @@ Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionControlle
 Route::middleware('auth:sanctum')->post('posts', [OutfitController::class, 'create']);
 Route::middleware('auth:sanctum')->put('posts/{outfit:id}', [OutfitController::class, 'update']);
 Route::middleware('auth:sanctum')->delete('posts/{outfit:id}', [OutfitController::class, 'destroy']);
+Route::middleware('auth:sanctum')->resource('items', 'ItemController');
 
 Route::post('register', [RegisteredUserController::class, 'store']);
 Route::post('login', [AuthenticatedSessionController::class, 'store']);

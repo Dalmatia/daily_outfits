@@ -80,6 +80,9 @@
         <li @click="select('Calendar')" :class="{ active: tab === 'Calendar' }">
           <i class="fa-regular fa-calendar-days inline-block p-1 text-xl"></i>
         </li>
+        <li @click="select('CreatePost')" :class="{ active: tab === 'CreatePost' }">
+          <i class="fas fa-plus-circle inline-block p-1 text-xl"></i>
+        </li>
         <li @click="select('ItemList')" :class="{ active: tab === 'ItemList' }">
           <img src="../icons/hanger.svg" class="inline-block h-7 w-7 p-1" alt="" />
         </li>
