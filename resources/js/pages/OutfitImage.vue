@@ -1,8 +1,8 @@
 <template>
   <div class="flex flex-wrap w-1/3" v-for="outfit in outfits" :key="outfit.id">
-    <div class="w-96 bg-white mx-1 mt-2">
+    <div class="rounded shadow bg-white w-full m-1">
       <router-link :to="{ name: 'OutfitDetail', params: { id: outfit.id } }">
-        <img :src="outfit.outfit_image" alt="" />
+        <img class="h-52 w-64 md:h-80" :src="outfit.outfit_image" alt="" />
       </router-link>
       <p class="mr-8">{{ outfit.post_date }}</p>
       <div>
@@ -12,21 +12,8 @@
               {{ outfit.user }}
             </router-link>
           </div>
-          <a
-            href="#"
-            class="
-              float-right
-              bg-blue-500
-              py-1
-              text-white
-              font-semibold
-              text-sm
-              rounded
-              text-center
-              hidden
-              md:inline-block
-            "
-          >
+          <a href="#"
+            class="float-right bg-blue-500 py-1 text-white font-semibold text-sm rounded text-center hidden md:inline-block">
             フォロー
           </a>
         </div>
@@ -54,5 +41,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>

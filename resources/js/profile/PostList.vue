@@ -7,7 +7,7 @@
         <div class="flex flex-wrap w-1/3" v-for="outfit in outfits" :key="outfit.id">
             <div class="rounded shadow w-full p-1 md:p-2 m-1">
                 <router-link :to="{ name: 'OutfitDetail', params: { id: outfit.id } }">
-                    <img :src="outfit.outfit_image" alt="" />
+                    <img class="h-52 w-64 md:h-80" :src="outfit.outfit_image" alt="" />
                 </router-link>
                 <div class="flex items-center justify-between p-1" style="cursor: auto;">
                     <div class="flex items-center space-x-2" style="cursor: auto;">
