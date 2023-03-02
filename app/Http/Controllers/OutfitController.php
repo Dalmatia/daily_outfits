@@ -43,11 +43,19 @@ class OutfitController extends Controller
 
     public function show(Outfit $outfit)
     {
+        if (auth()->user()->id !== $outfit->user->id) {
+            return abort(403);
+        }
+
         return new OutfitResource($outfit);
     }
 
     public function update(Request $request, Outfit $outfit)
     {
+        if (auth()->user()->id !== $outfit->user->id) {
+            return abort(403);
+        }
+
         $request->validate([
             'outfit' => 'nullable | image',
             'post_date' => 'required'

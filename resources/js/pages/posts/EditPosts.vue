@@ -137,6 +137,9 @@ export default {
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
+          if (error.response.status === 403) {
+            this.$router.push({ name: 'Profile' })
+          }
         });
     },
   },
@@ -148,7 +151,9 @@ export default {
         this.preview = '/' + response.data.data.outfit_image;
       })
       .catch((error) => {
-        console.log(error);
+        if (error.response.status === 403) {
+          this.$router.push({ name: 'Profile' })
+        }
       });
   },
 };
