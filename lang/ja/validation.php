@@ -121,7 +121,9 @@ return [
         'email' => 'メールアドレス',
         'password' => 'パスワード',
         'outfit' => 'コーディネート画像',
-        'post_date' => '投稿日'
+        'post_date' => '投稿日',
+        'item_name' => 'アイテム名',
+        'item_image' => 'アイテム画像',
     ],
 
 ];

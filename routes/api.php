@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\OutfitController;
+use App\Http\Controllers\ItemController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Laravel\Fortify\Http\Controllers\AuthenticatedSessionController;
@@ -26,7 +27,7 @@ Route::middleware('auth:sanctum')->post('logout', [AuthenticatedSessionControlle
 Route::middleware('auth:sanctum')->post('posts', [OutfitController::class, 'create']);
 Route::middleware('auth:sanctum')->put('posts/{outfit:id}', [OutfitController::class, 'update']);
 Route::middleware('auth:sanctum')->delete('posts/{outfit:id}', [OutfitController::class, 'destroy']);
-Route::middleware('auth:sanctum')->resource('items', 'ItemController');
+Route::middleware('auth:sanctum')->post('items', [ItemController::class, 'create']);
 
 Route::post('register', [RegisteredUserController::class, 'store']);
 Route::post('login', [AuthenticatedSessionController::class, 'store']);

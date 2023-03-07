@@ -13,11 +13,11 @@ class Item extends Model
 
     public function category()
     {
-        return $this->hasOne('App\Category');
+        return $this->hasOne(Category::class);
     }
 
     public function user()
     {
-        return $this->belongsTo('App\User');
+        return $this->belongsTo(User::class);
     }
 }

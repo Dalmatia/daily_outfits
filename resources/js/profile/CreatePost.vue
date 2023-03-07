@@ -34,7 +34,7 @@
             </span>
           </div>
 
-          <div>
+          <!-- <div>
             <label for="categories" class="inline-block text-gray-800 text-sm sm:text-base mb-2">
               アイテムカテゴリー:
             </label>
@@ -49,7 +49,8 @@
             <span v-if="errors.category_id" class="error">
               {{ errors.category_id[0] }}
             </span>
-          </div>
+          </div> -->
+          <SelectCategory />
 
           <button type="submit"
             class="block bg-gray-800 hover:bg-gray-700 active:bg-gray-600 focus-visible:ring ring-gray-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3">
@@ -64,14 +65,16 @@
 
 <script>
 import axios from 'axios';
+import SelectCategory from '../pages/category/SelectCategory.vue';
 export default {
   emits: ['updateHeader'],
+  components: {
+    SelectCategory
+  },
   data() {
     return {
       success: false,
-      fields: {
-        category_id: null,
-      },
+      fields: {},
       preview: '',
       responsiveOptions: [
         {
@@ -101,7 +104,6 @@ export default {
         .then(() => {
           this.fields = {};
           this.preview = null;
-          this.fields.category_id = null;
           this.errors = {};
           this.success = true;
           setTimeout(() => {

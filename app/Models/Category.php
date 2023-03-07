@@ -9,10 +9,10 @@ class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['item_id', 'category_id', 'name'];
+    protected $fillable = ['item_id', 'category_id', 'category_name'];
 
     public function item()
     {
-        return $this->belongsTo('App\Item');
+        return $this->belongsTo(Item::class);
     }
 }

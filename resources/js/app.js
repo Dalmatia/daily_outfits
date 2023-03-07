@@ -3,6 +3,7 @@ import { createApp } from 'vue';
 import App from '../js/App.vue';
 import '../css/app.css';
 import router from './router';
+import store from './store';
 
 import PrimeVue from 'primevue/config';
 import Calendar from 'primevue/calendar';
@@ -14,6 +15,7 @@ import ja from './src/i18n/locale/ja';
 
 createApp(App)
     .use(router)
+    .use(store)
     .use(PrimeVue, { locale: ja })
     .component('Calendar', Calendar)
     .mount('#app');
