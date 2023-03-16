@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import Home from '../pages/Home.vue';
 import Login from '../pages/Login.vue';
 import Register from '../pages/Register.vue';
-import Profile from '../profile/Profile.vue';
+import UserPage from '../profile/UserPage.vue';
 import OutfitDetail from '../pages/OutfitDetail.vue';
 import CreatePosts from '../pages/posts/CreatePosts.vue';
 import EditPosts from '../pages/posts/EditPosts.vue';
@@ -26,9 +26,9 @@ const routes = [
         meta: { requiresGuest: true },
     },
     {
-        path: '/profile',
-        name: 'Profile',
-        component: Profile,
+        path: '/user',
+        name: 'UserPage',
+        component: UserPage,
     },
     {
         path: '/outfit/:id',
