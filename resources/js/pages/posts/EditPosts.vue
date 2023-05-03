@@ -74,32 +74,25 @@
                         </span>
 
                         <!-- <label
-              for="items"
-              class="inline-block text-gray-800 text-sm sm:text-base mb-2"
-            >
-              着用アイテム:
-            </label>
-            <select
-              class="
-                w-full
-                text-gray-800
-                border
-                rounded
-                outline-none
-                transition
-                duration-100
-                px-3
-                py-2
-                mb-2
-              "
-              v-model="fields.item_id"
-              id="categories"
-            >
-              <option disabled value="">選択してください</option>
-              <option :value="item.id" v-for="item in items" :key="item.id">
-                {{ item }}
-              </option>
-            </select> -->
+                            for="items"
+                            class="inline-block text-gray-800 text-sm sm:text-base mb-2"
+                        >
+                            着用アイテム:
+                        </label>
+                        <select
+                            class="w-full text-gray-800 border rounded outline-none transition duration-100 px-3 py-2 mb-2"
+                            v-model="fields.item_id"
+                            id="categories"
+                        >
+                            <option disabled value="">選択してください</option>
+                            <option
+                                :value="item.id"
+                                v-for="item in items"
+                                :key="item.id"
+                            >
+                                {{ item }}
+                            </option>
+                        </select> -->
                     </div>
 
                     <button

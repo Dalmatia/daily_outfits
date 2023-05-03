@@ -27,7 +27,7 @@ class OutfitController extends Controller
         $user_id = auth()->user()->id;
         $outfit_image = 'storage/' . $request->file('outfit')->store('outfitsImages', 'public');
         $description = $request->input('description');
-        $post_date = \Carbon\Carbon::parse($request->post_date)->timezone('Asia/Tokyo');
+        $post_date = \Carbon\Carbon::parse($request->input('post_date'))->timezone('Asia/Tokyo')->toDateString();
         $item_id = $request->item_id;
 
         $outfit = new Outfit();
@@ -53,29 +53,32 @@ class OutfitController extends Controller
     public function update(Request $request, Outfit $outfit)
     {
         if (auth()->user()->id !== $outfit->user->id) {
-            return abort(403);
+            return response()->json(['error' => 'ログインしていないため、コーディネート情報を更新できません'], 403);
         }
 
         $request->validate([
-            'outfit' => 'nullable | image',
-            'post_date' => 'required'
+            'outfit' => 'nullable|image',
+            'post_date' => 'required|date_format:Y-m-d'
         ]);
 
-        $description = $request->input('description');
-        $post_date = \Carbon\Carbon::parse($request->post_date)->timezone('Asia/Tokyo')->format('Y-m-d');
+        $description = $request->description;
+        $post_date = \Carbon\Carbon::parse($request->input('post_date'))->timezone('Asia/Tokyo')->toDateString();
         $item_id = $request->item_id;
 
-        if ($request->file('outfit')) {
+        if ($request->hasFile('outfit')) {
             File::delete($outfit->outfit_image);
-            $outfit_image = 'storage/' . $request->file('outfit')->store('outfitsImages', 'public');
-            $outfit->outfit_image = $outfit_image;
+            $outfit_image = $request->file('outfit')->store('outfitsImages', 'public');
+            $outfit->outfit_image = 'storage/' . $outfit_image;
         }
 
         $outfit->description = $description;
         $outfit->post_date = $post_date;
         $outfit->item_id = $item_id;
-        return $outfit->save();
+        $outfit->save();
+
+        return response()->json($outfit, 200);
     }
+
 
     public function destroy(Outfit $outfit)
     {
